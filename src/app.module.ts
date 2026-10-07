@@ -1,33 +1,35 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
+// Importación de todos los módulos que se crearon en el sistema
 import { TenantsModule } from './modules/tenants/tenants.module';
 import { UsersModule } from './modules/users/users.module';
+import { RolesModule } from './modules/roles/roles.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { LocationsModule } from './modules/locations/locations.module';
 import { ItemsModule } from './modules/items/items.module';
 import { LoansModule } from './modules/loans/loans.module';
-import { RolesModule } from './modules/roles/roles.module';
 import { StockMovementsModule } from './modules/stock-movements/stock-movements.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres', // Usuario por defecto
-      password: '99MQS.VOG', // Reemplaza esto con tu clave de pgAdmin
-      database: 'citt_stock_db',
+      url: 'postgresql://postgres.whfzdcivfhganpctttjb:B.Xs_N-A6nbKE2S@aws-1-sa-east-1.pooler.supabase.com:5432/postgres', // Pon tu clave real
       autoLoadEntities: true,
-      synchronize: false, // En false porque ya creamos las 8 tablas en pgAdmin
+      synchronize: false,
+      ssl: {
+        rejectUnauthorized: false,
+      },
     }),
+    // Se deben registrar cada módulo aquí para que sus rutas funcionen
     TenantsModule,
     UsersModule,
+    RolesModule,
     CategoriesModule,
     LocationsModule,
     ItemsModule,
     LoansModule,
-    RolesModule,
     StockMovementsModule,
   ],
 })
