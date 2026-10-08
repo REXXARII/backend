@@ -1,49 +1,78 @@
-# CITT Stock 📦
+# CITT Stock - Backend 🚀
 
-> Sistema web de gestión, control de inventario y trazabilidad de activos para el **Centro de Innovación y Transferencia Tecnológica (CITT)** – Duoc UC Sede San Bernardo.
+> API REST y lógica de negocio para la plataforma de gestión, control de inventario y trazabilidad de activos del **Centro de Innovación y Transferencia Tecnológica (CITT)** – Duoc UC Sede San Bernardo.
 
 ---
 
 ## 📌 Descripción General
 
-**CITT Stock** es una plataforma web desarrollada para optimizar la administración, trazabilidad y control de inventario en el CITT de Duoc UC Sede San Bernardo. El sistema centraliza y automatiza el registro de activos tecnológicos, herramientas e insumos consumibles, facilitando la gestión de préstamos, devoluciones y entregas en tiempo real.
-
----
-
-## ✨ Características Principales
-
-* **Control de Movimientos:** Gestión integral de préstamos temporales, devoluciones y entrega definitiva de insumos consumibles.
-* **Organización por Ubicaciones:** Registro estructurado por casilleros y espacios asignados para una localización rápida de activos.
-* **Identificación vía Código QR:** Generación e integración de códigos QR para agilizar la búsqueda y consulta de información en terreno, siguiendo estrictamente la nomenclatura oficial (IM-CITT-, 3D-CITT-, TA-CITT-, EQ-CITT-).
-* **Módulos de Mantenimiento:** Seguimiento de órdenes de trabajo preventivas y correctivas para asegurar el estado operativo de los equipos.
-* **Gestión de Stock:** Control de existencias, histórico de movimientos, alertas de stock mínimo y conversión matemática de consumibles.
-* **Panel de Control y Analítica:** Vista consolidada de métricas operativas y reportes generales.
-
----
-
-## 👥 Roles y Permisos
-
-El sistema opera bajo un modelo de accesos estructurado:
-
-* **Administrador (Paz Morales Saavedra):** Control total del sistema, parametrización, reportes y aprobaciones generales.
-* **Alumno Líder (AL):** Gestión operativa presencial en ventanilla para registrar préstamos, devoluciones y entregas definitivas.
-* **Usuario Global:** Perfil de consulta para la comunidad de la sede, cuyas solicitudes de insumos requieren validación y aprobación presencial.
+Este repositorio contiene exclusivamente el código **Backend** de **CITT Stock**. El servidor está desarrollado para centralizar el control de inventario, procesar flujos de préstamos temporales, devoluciones y entregas definitivas (pedidos), y administrar el modelo multi-tenant de la organización.
 
 ---
 
 ## 🛠️ Tecnologías Utilizadas
 
-* **Lenguaje Base:** TypeScript.
-* **Frontend:** Next.js (React) y Tailwind CSS.
-* **Backend:** NestJS (Node.js).
-* **Base de Datos:** PostgreSQL con soporte multi-tenant.
-* **Control de Versiones:** Git & GitHub.
+* **Framework Principal:** [NestJS](https://nestjs.com/) (Node.js con TypeScript)
+* **Lenguaje:** [TypeScript](https://www.typescriptlang.org/)
+* **Base de Datos:** [PostgreSQL](https://www.postgresql.org/) con soporte Multi-Tenancy (Row Level Security / tenant_id) y identificadores UUID v4.
+* **ORM / Conexión:** Prisma ORM o TypeORM (según configuración local)
+
+---
+
+## 📂 Arquitectura de Módulos (Base de Datos & Endpoints)
+
+El backend gestiona las siguientes 8 entidades principales del sistema:
+1. **tenants:** Sedes y configuraciones globales de la organización.
+2. **roles:** Niveles de permisos de acceso.
+3. **users:** Miembros del centro (Administradores, Alumnos Líderes y Usuarios Globales).
+4. **categories:** Clasificación de activos (Mobiliario, 3D, Talleres, Equipamiento).
+5. **locations:** Casilleros físicos y espacios asignados (Ocupado / Disponible / Sin Casillero).
+6. **items:** Catálogo de activos y generación de códigos únicos (IM-CITT-, 3D-CITT-, etc.).
+7. **loans:** Registro de movimientos (Préstamos con fecha límite, devoluciones y pedidos definitivos).
+8. **stock_movements:** Auditoría y trazabilidad histórica de entradas y salidas.
+
+---
+
+## 🚀 Guía de Instalación y Configuración Local
+
+Sigue estos pasos para levantar el entorno de desarrollo del backend en tu máquina:
+
+### 1. Clonar el repositorio
+```bash
+git clone https://github.com/TU_USUARIO/citt-stock-backend.git
+cd citt-stock-backend
+```
+
+### 2. Instalar las dependencias
+```bash
+npm install
+```
+
+### 3. Configurar las variables de entorno
+Crea un archivo `.env` en la raíz del proyecto basándote en el entorno de tu base de datos PostgreSQL:
+```env
+DATABASE_URL="postgresql://usuario:contraseña@localhost:5432/citt_stock_db?schema=public"
+PORT=3000
+```
+
+### 4. Ejecutar las migraciones / Sincronizar Prisma
+Si utilizas Prisma, sincroniza la base de datos:
+```bash
+npx prisma db pull
+npx prisma generate
+```
+
+### 5. Iniciar el servidor en modo desarrollo
+```bash
+npm run start:dev
+```
+El servidor estará disponible en `http://localhost:3000`. Puedes probar los endpoints utilizando herramientas como **Thunder Client** o Postman.
 
 ---
 
 ## 🤝 Representantes del Proyecto
 
-* **Representante de la Contraparte / Cliente:** Paz Morales Saavedra (`pc.morales@profesor.duoc.cl`)
-* **Unidad Ejecutora:** 
-* Arianette Pavez
-* Tania Gaete
+* **Contraparte Institucional / Cliente:** Paz Constanza Morales Saavedra (`pc.morales@profesor.duoc.cl`)
+* **Unidad Ejecutora:** Estudiantes de la Escuela de Informática y Telecomunicaciones — Duoc UC Sede San Bernardo.
+* - Arianette Pavez
+* - Tania Gaete
