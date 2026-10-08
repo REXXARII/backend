@@ -39,8 +39,8 @@ Sigue estos pasos para levantar el entorno de desarrollo del backend en tu máqu
 
 ### 1. Clonar el repositorio
 ```bash
-git clone https://github.com/TU_USUARIO/citt-stock-backend.git
-cd citt-stock-backend
+git clone https://github.com/TU_USUARIO/backend.git
+cd backend
 ```
 
 ### 2. Instalar las dependencias
@@ -74,5 +74,5 @@ El servidor estará disponible en `http://localhost:3000`. Puedes probar los end
 
 * **Contraparte Institucional / Cliente:** Paz Constanza Morales Saavedra (`pc.morales@profesor.duoc.cl`)
 * **Unidad Ejecutora:** Estudiantes de la Escuela de Informática y Telecomunicaciones — Duoc UC Sede San Bernardo.
-* - Arianette Pavez
-* - Tania Gaete
+  * - Arianette Pavez
+  * - Tania Gaete
