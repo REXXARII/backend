@@ -3,6 +3,8 @@ import { StockMovementsService } from './stock-movements.service';
 import { CreateStockMovementDto } from './dto/create-stock-movement.dto';
 import { UpdateStockMovementDto } from './dto/update-stock-movement.dto';
 
+
+//Este archivo define el controlador para gestionar los movimientos de stock en el sistema.
 @Controller('stock-movements')
 export class StockMovementsController {
   constructor(private readonly stockMovementsService: StockMovementsService) {}
@@ -19,16 +21,16 @@ export class StockMovementsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.stockMovementsService.findOne(+id);
+    return this.stockMovementsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStockMovementDto: UpdateStockMovementDto) {
-    return this.stockMovementsService.update(+id, updateStockMovementDto);
+    return this.stockMovementsService.update(id, updateStockMovementDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.stockMovementsService.remove(+id);
+    return this.stockMovementsService.remove(id);
   }
 }
