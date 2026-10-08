@@ -1,16 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-@Entity('tenants') // Así se llama tu tabla en PostgreSQL
+@Entity('tenants')
 export class Tenant {
-  @PrimaryGeneratedColumn('uuid') // Genera el UUID automático
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @Column({ type: 'varchar', length: 255 })
+  @Column({ type: 'varchar', length: 150 })
   name: string;
 
-  @CreateDateColumn({ type: 'timestamp with time zone' })
-  created_at: Date;
-
-  @Column({ type: 'jsonb', default: {} })
-  settings: Record<string, any>; // Permite guardar la parametrización dinámica
+  @Column({ type: 'jsonb', nullable: true })
+  settings: Record<string, any>;
 }
