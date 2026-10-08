@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+//Define la entidad "Item" que representa un activo en el sistema, con sus propiedades y tipos de datos correspondientes.
 @Entity('items')
 export class Item {
   @PrimaryGeneratedColumn('uuid')
