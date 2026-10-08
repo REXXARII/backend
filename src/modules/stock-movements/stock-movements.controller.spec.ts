@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { StockMovementsController } from './stock-movements.controller';
 import { StockMovementsService } from './stock-movements.service';
 
+//Este archivo contiene pruebas unitarias para el controlador de movimientos de stock en el sistema.
 describe('StockMovementsController', () => {
   let controller: StockMovementsController;
 
