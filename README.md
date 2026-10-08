@@ -72,7 +72,7 @@ El servidor estará disponible en `http://localhost:3000`. Puedes probar los end
 
 ## 🤝 Representantes del Proyecto
 
-* **Contraparte Institucional / Cliente:** Paz Constanza Morales Saavedra (`pc.morales@profesor.duoc.cl`)
+* **Contraparte Institucional / Cliente:** Paz Morales Saavedra
 * **Unidad Ejecutora:** Estudiantes de la Escuela de Informática y Telecomunicaciones — Duoc UC Sede San Bernardo.
   * - Arianette Pavez
   * - Tania Gaete
