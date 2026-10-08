@@ -21,7 +21,7 @@ export class Loan {
   type: string;
 
   @Column({ type: 'timestamp with time zone', nullable: true })
-  due_date: Date;
+  due_date: Date | null;
 
   @Column({ type: 'boolean', default: false })
   is_returned: boolean;

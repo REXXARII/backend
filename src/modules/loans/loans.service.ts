@@ -2,6 +2,8 @@ import { Injectable, BadRequestException, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Loan } from './entities/loan.entity';
+import { CreateLoanDto } from './dto/create-loan.dto';
+import { UpdateLoanDto } from './dto/update-loan.dto';
 
 @Injectable()
 export class LoansService {
@@ -10,16 +12,12 @@ export class LoansService {
     private readonly loanRepository: Repository<Loan>,
   ) {}
 
-  async create(createLoanDto: any) {
-    const { type, due_date } = createLoanDto;
-
-    // Regla de negocio: Si es PRESTAMO, la fecha de retorno es obligatoria
-    if (type === 'PRESTAMO' && !due_date) {
-      throw new BadRequestException('Los préstamos temporales exigen obligatoriamente una fecha límite o de retorno.');
+  async create(createLoanDto: CreateLoanDto) {
+    if (createLoanDto.type === 'PRESTAMO' && !createLoanDto.due_date) {
+      throw new BadRequestException('Los préstamos temporales exigen obligatoriamente una fecha límite de retorno.');
     }
 
-    // Regla de negocio: Si es PEDIDO, la fecha de retorno se anula
-    if (type === 'PEDIDO') {
+    if (createLoanDto.type === 'PEDIDO') {
       createLoanDto.due_date = null;
     }
 
@@ -34,13 +32,23 @@ export class LoansService {
   async findOne(id: string) {
     const loan = await this.loanRepository.findOneBy({ id });
     if (!loan) {
-      throw new NotFoundException(`Préstamo con ID ${id} no encontrado.`);
+      throw new NotFoundException(`El registro con ID ${id} no existe en la base de datos.`);
     }
     return loan;
   }
 
-  async update(id: string, updateLoanDto: any) {
-    await this.findOne(id); // Verifica que exista
+  async update(id: string, updateLoanDto: UpdateLoanDto) {
+    const existingLoan = await this.findOne(id); 
+    
+    // Regla: Un préstamo no puede pasar a pedido (entrega definitiva)
+    if (existingLoan.type === 'PRESTAMO' && updateLoanDto.type === 'PEDIDO') {
+      throw new BadRequestException('No es posible cambiar el tipo de registro: un préstamo de equipo no puede convertirse en un pedido consumible.');
+    }
+
+    if (updateLoanDto.type === 'DEVOLUCION') {
+        updateLoanDto.is_returned = true;
+    }
+
     await this.loanRepository.update(id, updateLoanDto);
     return await this.findOne(id);
   }
