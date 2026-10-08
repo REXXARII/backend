@@ -14,6 +14,12 @@ export class StockMovement {
   @Column({ type: 'uuid', nullable: true })
   user_id: string;
 
+  @Column({ type: 'decimal', precision: 10, scale: 3, default: 0 })
+  quantity: number;
+
+  @Column({ type: 'varchar', length: 20, default: 'unidades' })
+  unit: string;
+
   @Column({ type: 'text', nullable: true })
   movement_description: string;
 

@@ -17,7 +17,7 @@ import { StockMovementsModule } from './modules/stock-movements/stock-movements.
       type: 'postgres',
       url: 'postgresql://postgres.whfzdcivfhganpctttjb:B.Xs_N-A6nbKE2S@aws-1-sa-east-1.pooler.supabase.com:5432/postgres', // Pon tu clave real
       autoLoadEntities: true,
-      synchronize: false,
+      synchronize: false, // Solo para desarrollo, no usar en producción
       ssl: {
         rejectUnauthorized: false,
       },
