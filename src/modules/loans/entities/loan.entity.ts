@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity('loans')
+@Entity('loans')  // Entidad que representa un préstamo o pedido en la base de datos
 export class Loan {
   @PrimaryGeneratedColumn('uuid')
   id: string;

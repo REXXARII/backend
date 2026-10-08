@@ -3,7 +3,7 @@ import { LoansService } from './loans.service';
 import { CreateLoanDto } from './dto/create-loan.dto';
 import { UpdateLoanDto } from './dto/update-loan.dto';
 
-@Controller('loans')
+@Controller('loans')  // Controlador para manejar las rutas relacionadas con préstamos y pedidos
 export class LoansController {
   constructor(private readonly loansService: LoansService) {}
 
