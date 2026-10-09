@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+//Representa una entidad de rol en la base de datos, con propiedades para el ID, el ID del inquilino, el nombre y los permisos asociados al rol.
 @Entity('roles')
 export class Role {
   @PrimaryGeneratedColumn('uuid')
