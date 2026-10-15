@@ -1,5 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
+// Definición de la entidad User para la base de datos
 @Entity('users')
 export class User {
   @PrimaryGeneratedColumn('uuid')

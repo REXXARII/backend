@@ -3,6 +3,7 @@ import { LocationsService } from './locations.service';
 import { CreateLocationDto } from './dto/create-location.dto';
 import { UpdateLocationDto } from './dto/update-location.dto';
 
+// Controlador para manejar las rutas relacionadas con las ubicaciones
 @Controller('locations')
 export class LocationsController {
   constructor(private readonly locationsService: LocationsService) {}
@@ -19,16 +20,16 @@ export class LocationsController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.locationsService.findOne(+id);
+    return this.locationsService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateLocationDto: UpdateLocationDto) {
-    return this.locationsService.update(+id, updateLocationDto);
+    return this.locationsService.update(id, updateLocationDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.locationsService.remove(+id);
+    return this.locationsService.remove(id);
   }
 }
