@@ -14,6 +14,7 @@ export class LocationsService {
   ) {}
 
   async create(createLocationDto: CreateLocationDto) {
+    createLocationDto.tenant_id = process.env.CITT_TENANT_ID!;
     if (createLocationDto.name && createLocationDto.name.toUpperCase() === 'SIN CASILLERO') {
       createLocationDto.description = 'Ubicación virtual para equipos móviles sin asignación física fija.';
     }
@@ -22,18 +23,18 @@ export class LocationsService {
   }
 
   async findAll() {
-    return await this.locationRepository.find();
+    return await this.locationRepository.find({ where: { tenant_id: process.env.CITT_TENANT_ID! } });
   }
 
   async findOne(id: string) {
-    const location = await this.locationRepository.findOneBy({ id });
+    const location = await this.locationRepository.findOneBy({ id, tenant_id: process.env.CITT_TENANT_ID! });
     if (!location) throw new NotFoundException(`Ubicación con ID ${id} no encontrada.`);
     return location;
   }
 
   async update(id: string, updateLocationDto: UpdateLocationDto) {
     await this.findOne(id);
-    await this.locationRepository.update(id, updateLocationDto);
+    await this.locationRepository.update({ id, tenant_id: process.env.CITT_TENANT_ID! }, updateLocationDto);
     return await this.findOne(id);
   }
 
