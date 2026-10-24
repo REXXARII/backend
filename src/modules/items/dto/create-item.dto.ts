@@ -6,4 +6,8 @@ export class CreateItemDto {
   code: string;
   name: string;
   status?: string;
+  stock?: number;
+  unit?: string;
+  is_consumable?: boolean;
+  serial_number?: string | null;
 }

@@ -1,7 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
-// Importación de todos los módulos que se crearon en el sistema
 import { TenantsModule } from './modules/tenants/tenants.module';
 import { UsersModule } from './modules/users/users.module';
 import { RolesModule } from './modules/roles/roles.module';
@@ -10,19 +8,27 @@ import { LocationsModule } from './modules/locations/locations.module';
 import { ItemsModule } from './modules/items/items.module';
 import { LoansModule } from './modules/loans/loans.module';
 import { StockMovementsModule } from './modules/stock-movements/stock-movements.module';
+import { APP_GUARD } from '@nestjs/core';
+import { AuthModule } from './auth/auth.module';
+import { JwtAuthGuard, RolesGuard } from './auth/auth.guards';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: 'postgresql://postgres.whfzdcivfhganpctttjb:B.Xs_N-A6nbKE2S@aws-1-sa-east-1.pooler.supabase.com:5432/postgres', // Pon tu clave real
+      url: process.env.DATABASE_URL,
       autoLoadEntities: true,
-      synchronize: false, // Solo para desarrollo, no usar en producción
-      ssl: {
-        rejectUnauthorized: false,
+      synchronize: false,
+      ssl: process.env.DATABASE_SSL === 'false'
+        ? false
+        : {
+            rejectUnauthorized: process.env.DATABASE_SSL_REJECT_UNAUTHORIZED !== 'false',
+          },
+      extra: {
+        options: `-c app.tenant_id=${process.env.CITT_TENANT_ID}`,
       },
     }),
-    // Se deben registrar cada módulo aquí para que sus rutas funcionen
+    AuthModule,
     TenantsModule,
     UsersModule,
     RolesModule,
@@ -31,6 +37,10 @@ import { StockMovementsModule } from './modules/stock-movements/stock-movements.
     ItemsModule,
     LoansModule,
     StockMovementsModule,
+  ],
+  providers: [
+    { provide: APP_GUARD, useClass: JwtAuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AppModule {}

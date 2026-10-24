@@ -23,4 +23,16 @@ export class Item {
 
   @Column({ type: 'varchar', length: 50, default: 'OPERATIVE' })
   status: string;
+
+  @Column({ type: 'numeric', precision: 12, scale: 3, default: 0 })
+  stock: string;
+
+  @Column({ type: 'varchar', length: 30, default: 'unidades' })
+  unit: string;
+
+  @Column({ type: 'boolean', default: false })
+  is_consumable: boolean;
+
+  @Column({ type: 'varchar', length: 150, nullable: true })
+  serial_number: string | null;
 }

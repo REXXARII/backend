@@ -20,6 +20,12 @@ export class Loan {
   @Column({ type: 'varchar', length: 50 })
   type: string;
 
+  @Column({ type: 'numeric', precision: 12, scale: 3, default: 1 })
+  quantity: string;
+
+  @Column({ type: 'varchar', length: 30, default: 'unidades' })
+  unit: string;
+
   @Column({ type: 'timestamp with time zone', nullable: true })
   due_date: Date | null;
 
