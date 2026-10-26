@@ -1,9 +1,10 @@
 // DTO para crear un nuevo usuario
 export class CreateUserDto {
-  tenant_id: string;
   role_id?: string;
-  name: string;
-  email: string;
-  password_hash: string;
+  name!: string;
+  email!: string;
+  run!: string;
+  school!: string;
+  password!: string;
   is_blocked?: boolean;
 }

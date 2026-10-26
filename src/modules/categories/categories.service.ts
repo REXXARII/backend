@@ -15,7 +15,11 @@ export class CategoriesService {
 
   // Crea una nueva categoría después de verificar que no exista una categoría con el mismo nombre.
   async create(createCategoryDto: CreateCategoryDto) {
-    const existingCategory = await this.categoryRepository.findOneBy({ name: createCategoryDto.name });
+    createCategoryDto.tenant_id = process.env.CITT_TENANT_ID!;
+    const existingCategory = await this.categoryRepository.findOneBy({
+      name: createCategoryDto.name,
+      tenant_id: createCategoryDto.tenant_id,
+    });
     if (existingCategory) {
       throw new ConflictException(`La categoría ${createCategoryDto.name} ya existe en el sistema.`);
     }
@@ -27,12 +31,12 @@ export class CategoriesService {
 
   // Recupera todas las categorías existentes en la base de datos.
   async findAll() {
-    return await this.categoryRepository.find();
+    return await this.categoryRepository.find({ where: { tenant_id: process.env.CITT_TENANT_ID! } });
   }
 
   // Recupera una categoría específica por su ID, lanzando una excepción si no se encuentra.
   async findOne(id: string) {
-    const category = await this.categoryRepository.findOneBy({ id });
+    const category = await this.categoryRepository.findOneBy({ id, tenant_id: process.env.CITT_TENANT_ID! });
     if (!category) {
       throw new NotFoundException(`La categoría con ID ${id} no existe.`);
     }
@@ -42,7 +46,7 @@ export class CategoriesService {
   // Actualiza una categoría existente después de verificar que exista, y devuelve la categoría actualizada.
   async update(id: string, updateCategoryDto: UpdateCategoryDto) {
     await this.findOne(id);
-    await this.categoryRepository.update(id, updateCategoryDto);
+    await this.categoryRepository.update({ id, tenant_id: process.env.CITT_TENANT_ID! }, updateCategoryDto);
     return await this.findOne(id);
   }
 

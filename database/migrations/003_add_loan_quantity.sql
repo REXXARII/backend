@@ -1,0 +1,3 @@
+ALTER TABLE loans
+  ADD COLUMN IF NOT EXISTS quantity numeric(12, 3) NOT NULL DEFAULT 1,
+  ADD COLUMN IF NOT EXISTS unit varchar(30) NOT NULL DEFAULT 'unidades';

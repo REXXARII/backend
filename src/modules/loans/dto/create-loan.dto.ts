@@ -5,4 +5,6 @@ export class CreateLoanDto {   // DTO para crear un nuevo préstamo o pedido
   school_origin: string;
   type: string;
   due_date?: Date | null;  //tipo de dato opcional, puede ser null
+  quantity?: number;
+  unit?: string;
 }
