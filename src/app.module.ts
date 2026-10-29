@@ -8,6 +8,7 @@ import { LocationsModule } from './modules/locations/locations.module';
 import { ItemsModule } from './modules/items/items.module';
 import { LoansModule } from './modules/loans/loans.module';
 import { StockMovementsModule } from './modules/stock-movements/stock-movements.module';
+import { NeonModule } from './modules/neon/neon.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard, RolesGuard } from './auth/auth.guards';
@@ -16,7 +17,7 @@ import { JwtAuthGuard, RolesGuard } from './auth/auth.guards';
   imports: [
     TypeOrmModule.forRoot({
       type: 'postgres',
-      url: process.env.DATABASE_URL,
+      url: process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL,
       autoLoadEntities: true,
       synchronize: false,
       ssl: process.env.DATABASE_SSL === 'false'
@@ -37,6 +38,7 @@ import { JwtAuthGuard, RolesGuard } from './auth/auth.guards';
     ItemsModule,
     LoansModule,
     StockMovementsModule,
+    NeonModule,
   ],
   providers: [
     { provide: APP_GUARD, useClass: JwtAuthGuard },
